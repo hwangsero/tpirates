@@ -12,7 +12,7 @@
 - swagger : http://localhost:8080/swagger-ui.html
 - h2 : http://localhost:8080/h2-console
 
-## 테이블 생성 SQl
+## 테이블 생성 SQL
 __** 현재 JPA create 설정으로 테이블이 자동 생성 됩니다.__
 
 create table business_time (
