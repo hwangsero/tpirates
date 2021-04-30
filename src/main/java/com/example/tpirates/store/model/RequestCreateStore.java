@@ -18,6 +18,7 @@ public class RequestCreateStore {
     @NotEmpty
     private String owner;
     private String description;
+    @NotEmpty
     private int level;
     private String address;
     @Pattern(regexp="^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$", message="전화번호 입력값이 올바르지 않습니다.")
