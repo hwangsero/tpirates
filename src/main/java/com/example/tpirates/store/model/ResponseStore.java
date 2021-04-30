@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ResponseStores {
+public class ResponseStore {
 
     private String name;
     private String description;
@@ -15,7 +15,7 @@ public class ResponseStores {
     private BusinessStatus businessStatus;
 
     @Builder
-    public ResponseStores(String name, String description, int level, BusinessStatus businessStatus) {
+    public ResponseStore(String name, String description, int level, BusinessStatus businessStatus) {
         this.name = name;
         this.description = description;
         this.level = level;

@@ -20,7 +20,7 @@ public class RequestCreateValidator implements Validator {
         RequestCreateStore request = (RequestCreateStore) target;
 
         request.getBusinessTimes().forEach(businessTime -> {
-            if(businessTime.getOpen().equals(businessTime.getClose())) {
+            if(businessTime.getOpen() == businessTime.getClose()) {
                 throw new ValidationException("businessTime");
             }
         }

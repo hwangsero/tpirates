@@ -1,5 +1,6 @@
 package com.example.tpirates.store;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,11 +16,11 @@ public class StoreDummy {
                 .address("인청광역시 남동구 논현동 680-1 소래포구 종합어시장 1층 1호")
                 .phone("010-1111-2222")
                 .businessTimes(new ArrayList<>(Arrays.asList(
-                        new BusinessTime(Day.Monday,"13:00","23:00"),
-                        new BusinessTime(Day.Tuesday,"13:00","23:00"),
-                        new BusinessTime(Day.Wednesday,"09:00","18:00"),
-                        new BusinessTime(Day.Thursday,"09:00","23:00"),
-                        new BusinessTime(Day.Friday,"09:00","23:00")
+                        new BusinessTime(Day.Monday, LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Tuesday,LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Wednesday,LocalTime.of(9,00),LocalTime.of(18,00)),
+                        new BusinessTime(Day.Thursday,LocalTime.of(9,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Friday,LocalTime.of(9,00),LocalTime.of(23,00))
                 ))).build();
 
         Store storeB = Store.builder()
@@ -30,11 +31,11 @@ public class StoreDummy {
                 .address("서울 동작구 노량진동 13-8 노량진수산시장 활어 001")
                 .phone("010-1234-1234")
                 .businessTimes(new ArrayList<>(Arrays.asList(
-                        new BusinessTime(Day.Monday,"09:00","24:00"),
-                        new BusinessTime(Day.Tuesday,"09:00","24:00"),
-                        new BusinessTime(Day.Wednesday,"09:00","24:00"),
-                        new BusinessTime(Day.Thursday,"09:00","24:00"),
-                        new BusinessTime(Day.Friday,"09:00","24:00")
+                        new BusinessTime(Day.Monday, LocalTime.of(9,00),LocalTime.of(00,00)),
+                        new BusinessTime(Day.Tuesday,LocalTime.of(9,00),LocalTime.of(00,00)),
+                        new BusinessTime(Day.Wednesday,LocalTime.of(9,00),LocalTime.of(00,00)),
+                        new BusinessTime(Day.Thursday,LocalTime.of(9,00),LocalTime.of(00,00)),
+                        new BusinessTime(Day.Friday,LocalTime.of(9,00),LocalTime.of(00,00))
                 ))).build();
         List<Store> stores = new ArrayList<>(Arrays.asList(storeA,storeB));
         return stores;

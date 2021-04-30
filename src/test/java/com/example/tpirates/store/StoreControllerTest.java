@@ -1,31 +1,25 @@
 package com.example.tpirates.store;
 
-import com.example.tpirates.exception.businessException.BusinessException;
 import com.example.tpirates.exception.businessException.EntityNotFoundException;
 import com.example.tpirates.exception.businessException.ValidationException;
 import com.example.tpirates.infra.MockMvcTest;
 import com.example.tpirates.store.model.RequestCreateStore;
-import com.example.tpirates.store.model.RequestCreateStoreHolidays;
-import com.example.tpirates.store.model.ResponseStores;
+import com.example.tpirates.store.model.ResponseStore;
+import com.example.tpirates.store.model.ResponseStoreDetail;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -43,6 +37,8 @@ public class StoreControllerTest {
     @Autowired
     ObjectMapper objectMapper;
     @Autowired
+    StoreService storeService;
+    @Autowired
     StoreRepository storeRepository;
 
     private Class<? extends Exception> getApiResultExceptionClass(MvcResult result) {
@@ -58,7 +54,7 @@ public class StoreControllerTest {
     @Test
     @DisplayName("점포 추가_성공")
     public void createStore_success() throws Exception {
-        //given : 추가할 점포 존재
+        //given : 추가할 점포 요청 존재
         RequestCreateStore requestStore = RequestCreateStore.builder()
             .name("인어수산")
             .owner("장인어")
@@ -67,11 +63,11 @@ public class StoreControllerTest {
             .address("인청광역시 남동구 논현동 680-1 소래포구 종합어시장 1층 1호")
             .phone("010-1111-2222")
             .businessTimes(new ArrayList<>(Arrays.asList(
-                    new BusinessTime(Day.Monday,"13:00","23:00"),
-                    new BusinessTime(Day.Tuesday,"13:00","23:00"),
-                    new BusinessTime(Day.Wednesday,"09:00","18:00"),
-                    new BusinessTime(Day.Thursday,"09:00","23:00"),
-                    new BusinessTime(Day.Friday,"09:00","23:00")
+                    new BusinessTime(Day.Monday, LocalTime.of(13,00),LocalTime.of(23,00)),
+                    new BusinessTime(Day.Tuesday,LocalTime.of(13,00),LocalTime.of(23,00)),
+                    new BusinessTime(Day.Wednesday,LocalTime.of(9,00),LocalTime.of(18,00)),
+                    new BusinessTime(Day.Thursday,LocalTime.of(9,00),LocalTime.of(23,00)),
+                    new BusinessTime(Day.Friday,LocalTime.of(9,00),LocalTime.of(23,00))
                     ))).build();
 
         //when : post, /api/store 으로 요청 시 점포 추가
@@ -107,11 +103,11 @@ public class StoreControllerTest {
                 .address("인청광역시 남동구 논현동 680-1 소래포구 종합어시장 1층 1호")
                 .phone("01011112222")
                 .businessTimes(new ArrayList<>(Arrays.asList(
-                        new BusinessTime(Day.Monday,"13:00","23:00"),
-                        new BusinessTime(Day.Tuesday,"13:00","23:00"),
-                        new BusinessTime(Day.Wednesday,"09:00","18:00"),
-                        new BusinessTime(Day.Thursday,"09:00","23:00"),
-                        new BusinessTime(Day.Friday,"09:00","23:00")
+                        new BusinessTime(Day.Monday, LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Tuesday,LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Wednesday,LocalTime.of(9,00),LocalTime.of(18,00)),
+                        new BusinessTime(Day.Thursday,LocalTime.of(9,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Friday,LocalTime.of(9,00),LocalTime.of(23,00))
                 ))).build();
 
         //when : post, /api/store 으로 요청 시 점포 추가 요청
@@ -138,11 +134,11 @@ public class StoreControllerTest {
                 .address("인청광역시 남동구 논현동 680-1 소래포구 종합어시장 1층 1호")
                 .phone("010-1111-2222")
                 .businessTimes(new ArrayList<>(Arrays.asList(
-                        new BusinessTime(Day.Monday,"13:00","13:00"),
-                        new BusinessTime(Day.Tuesday,"13:00","23:00"),
-                        new BusinessTime(Day.Wednesday,"09:00","18:00"),
-                        new BusinessTime(Day.Thursday,"09:00","23:00"),
-                        new BusinessTime(Day.Friday,"09:00","23:00")
+                        new BusinessTime(Day.Monday, LocalTime.of(13,00),LocalTime.of(13,00)),
+                        new BusinessTime(Day.Tuesday,LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Wednesday,LocalTime.of(9,00),LocalTime.of(18,00)),
+                        new BusinessTime(Day.Thursday,LocalTime.of(9,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Friday,LocalTime.of(9,00),LocalTime.of(23,00))
                 ))).build();
 
         //when : post, /api/store 으로 요청 시 점포 추가 요청
@@ -169,11 +165,11 @@ public class StoreControllerTest {
                 .address("인청광역시 남동구 논현동 680-1 소래포구 종합어시장 1층 1호")
                 .phone("010-1111-2222")
                 .businessTimes(new ArrayList<>(Arrays.asList(
-                        new BusinessTime(Day.Monday,"13:00","23:00"),
-                        new BusinessTime(Day.Tuesday,"13:00","23:00"),
-                        new BusinessTime(Day.Wednesday,"09:00","18:00"),
-                        new BusinessTime(Day.Thursday,"09:00","23:00"),
-                        new BusinessTime(Day.Friday,"09:00","23:00")
+                        new BusinessTime(Day.Monday, LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Tuesday,LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Wednesday,LocalTime.of(9,00),LocalTime.of(18,00)),
+                        new BusinessTime(Day.Thursday,LocalTime.of(9,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Friday,LocalTime.of(9,00),LocalTime.of(23,00))
                 ))).build();
         storeRepository.save(store);
 
@@ -206,20 +202,118 @@ public class StoreControllerTest {
                 .andReturn();
     }
 
-//    @Test
-//    @DisplayName("점포 목록 조회_성공")
-//    public void getStores_success() throws Exception {
-//        //given : 인어수산, 해적수산 점포 2개 존재
-//        //when : get, /api/stores 으로 요청 시 점포 목록 전체 조회
-//        MvcResult mvcResult = mockMvc.perform(get("/api/stores"))
-//                .andExpect(status().isOk())
-//                .andReturn();
-//
-//        //then : 인어수산, 해적수산 점포 2개 정상 조회 확인
-//        String strResult = mvcResult.getResponse().getContentAsString();
-//        List<ResponseStores> responseStores = objectMapper.readValue(strResult, new TypeReference<List<ResponseStores>>() {});
-//
-//    }
+    @Test
+    @DisplayName("점포 목록 조회_성공")
+    public void getStores_success() throws Exception {
+        //given : 인어수산, 해적수산 점포 2개 존재
+        List<Store> stores = StoreDummy.getStores();
+        stores.sort(new Comparator<Store>() {
+            @Override
+            public int compare(Store o1, Store o2) {
+                return o1.getLevel()-o2.getLevel();
+            }
+        });
 
+        //when : get, /api/store 으로 요청 시 점포 목록 전체 조회
+        MvcResult mvcResult = mockMvc.perform(get("/api/store"))
+                .andExpect(status().isOk())
+                .andReturn();
 
+        //then : 인어수산, 해적수산 점포 2개 정상 조회 확인
+        String strResult = mvcResult.getResponse().getContentAsString();
+        List<ResponseStore> responseStores = objectMapper.readValue(strResult, new TypeReference<List<ResponseStore>>() {});
+
+        assertThat(stores.size()).isEqualTo(responseStores.size());
+        for(int i = 0; i < responseStores.size(); i++) {
+            assertThat(stores.get(i).getName()).isEqualTo(responseStores.get(i).getName());
+            assertThat(stores.get(i).getDescription()).isEqualTo(responseStores.get(i).getDescription());
+            assertThat(stores.get(i).getLevel()).isEqualTo(responseStores.get(i).getLevel());
+            assertThat(storeService.getBusinessStatus(LocalDateTime.now(), stores.get(i).getBusinessTimes(),stores.get(i).getHolidays()))
+                    .isEqualTo(responseStores.get(0).getBusinessStatus());
+        }
+
+    }
+
+    @Test
+    @DisplayName("점포 상세 조회_성공")
+    public void getStoreDetail_success() throws Exception {
+        //given : 조회할 점포 존재
+        Store store = Store.builder()
+                .name("인어수산")
+                .owner("장인어")
+                .description("인천소래포구 종합어시장 갑각류센터 인어수산")
+                .level(2)
+                .address("인청광역시 남동구 논현동 680-1 소래포구 종합어시장 1층 1호")
+                .phone("010-1111-2222")
+                .businessTimes(new ArrayList<>(Arrays.asList(
+                        new BusinessTime(Day.Monday, LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Tuesday,LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Wednesday,LocalTime.of(9,00),LocalTime.of(18,00)),
+                        new BusinessTime(Day.Thursday,LocalTime.of(9,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Friday,LocalTime.of(9,00),LocalTime.of(23,00))
+                ))).build();
+        storeRepository.save(store);
+
+        //when : get, /api/store/{id}/detail 으로 요청 시 점포 상세 조회
+        MvcResult mvcResult = mockMvc.perform(get("/api/store/" + store.getId() + "/detail"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //then : 점포 상세 정상 조회 확인
+        String strResult = mvcResult.getResponse().getContentAsString();
+        ResponseStoreDetail responseStoreDetail = objectMapper.readValue(strResult, ResponseStoreDetail.class);
+
+        assertAll(
+                () -> assertThat(store.getId()).isEqualTo(responseStoreDetail.getId()),
+                () -> assertThat(store.getName()).isEqualTo(responseStoreDetail.getName()),
+                () -> assertThat(store.getDescription()).isEqualTo(responseStoreDetail.getDescription()),
+                () -> assertThat(store.getLevel()).isEqualTo(responseStoreDetail.getLevel()),
+                () -> assertThat(store.getAddress()).isEqualTo(responseStoreDetail.getAddress()),
+                () -> assertThat(store.getPhone()).isEqualTo(responseStoreDetail.getPhone())
+        );
+    }
+
+    @Test
+    @DisplayName("점포 삭제_성공")
+    public void StoreDelete_success() throws Exception {
+        //given : 삭제할 점포 존재
+        Store store = Store.builder()
+                .name("인어수산")
+                .owner("장인어")
+                .description("인천소래포구 종합어시장 갑각류센터 인어수산")
+                .level(2)
+                .address("인청광역시 남동구 논현동 680-1 소래포구 종합어시장 1층 1호")
+                .phone("010-1111-2222")
+                .businessTimes(new ArrayList<>(Arrays.asList(
+                        new BusinessTime(Day.Monday, LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Tuesday,LocalTime.of(13,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Wednesday,LocalTime.of(9,00),LocalTime.of(18,00)),
+                        new BusinessTime(Day.Thursday,LocalTime.of(9,00),LocalTime.of(23,00)),
+                        new BusinessTime(Day.Friday,LocalTime.of(9,00),LocalTime.of(23,00))
+                ))).build();
+        storeRepository.save(store);
+
+        //when : post, /api/store/{id}/delete 으로 요청 시 특정 점포 삭제
+        mockMvc.perform(post("/api/store/" + store.getId() + "/delete"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        //then : 점포 정상 삭제 확인
+        Optional<Store> optionalStore = storeRepository.findById(store.getId());
+        assertThat(optionalStore.isPresent()).isFalse();
+    }
+
+    @Test
+    @DisplayName("점포 삭제_실패_존재하지 않는 점포")
+    public void StoreDelete_fail_entityNotFound() throws Exception {
+        //given : 존재하지 않는 점포 id
+        Long id = Long.MAX_VALUE;
+
+        //when : post, /api/store/{id}/delete 으로 요청 시 특정 점포 삭제
+        //then : 존재하지 않는 점포 아이디에 대한 삭제 시도로 인해 4xx 에러, EntityNotFoundException 발생 확인
+        mockMvc.perform(post("/api/store/" + id + "/delete"))
+                .andExpect(status().is4xxClientError())
+                .andExpect(result -> assertThat(getApiResultExceptionClass(result)).isEqualTo(EntityNotFoundException.class))
+                .andReturn();
+    }
 }

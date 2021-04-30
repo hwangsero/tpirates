@@ -38,7 +38,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
             .title("더파이러츠 API")
-            .description("점포 API").build();
+            .description("인어교주해적단").build();
     }
 
 }
